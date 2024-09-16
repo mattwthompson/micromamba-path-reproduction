@@ -29,8 +29,8 @@ jobs:
     - name: Set up conda environment WITH custom binary path
       if: matrix.set-path == true
       uses: mamba-org/setup-micromamba@v1
-      environment-name: repro
       with:
+        environment-name: repro
         micromamba-binary-path: ~/.local/bin/micromamba
         create-args: >-
           python=3.12
@@ -38,8 +38,8 @@ jobs:
     - name: Set up conda environment WITHOUT custom binary path
       if: matrix.set-path == false
       uses: mamba-org/setup-micromamba@v1
-      environment-name: repro
       with:
+        environment-name: repro
         create-args: >-
           python=3.12
 
