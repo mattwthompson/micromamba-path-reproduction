@@ -20,8 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest]
-        set-path: [true, false]
+        os: [macos-latest, macos-12]
+        set-path: [false, true]
 
     steps:
     - uses: actions/checkout@v4
@@ -46,5 +46,5 @@ jobs:
     - name: Look at $PATH
       run: echo $PATH
 
-    - name: Double-check that the executable exists
+    - name: Try to find executable
       run: which micromamba
