@@ -1,0 +1,51 @@
+name: Reproduce
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+defaults:
+  run:
+    shell: bash -leo pipefail {0}
+
+jobs:
+  test:
+    name: setting path? ${{ matrix.set-path }}
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        set-path: [true, false]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up conda environment WITH custom binary path
+      if: matrix.set-path == true
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        micromamba-binary-path: ~/.local/bin/micromamba
+        create-args: >-
+          python=3.12
+
+    - name: Set up conda environment WITHOUT custom binary path
+      if: matrix.set-path == false
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        create-args: >-
+          python=3.12
+
+    - name: Look at what's in ~/.local/bin
+      run: ls -lha ~/.local/bin
+
+    - name: Look at $PATH
+      run: echo $PATH
+
+    - name: Double-check that the executable exists
+      run: which micromamba
