@@ -43,9 +43,6 @@ jobs:
         create-args: >-
           python=3.12
 
-    - name: Look at what's in ~/.local/bin
-      run: ls -lha ~/.local/bin
-
     - name: Look at $PATH
       run: echo $PATH
 
